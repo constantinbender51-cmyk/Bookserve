@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Book Server</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="max-w-xl w-full mx-auto bg-gray-800 border border-gray-700 rounded-2xl shadow-xl p-8 sm:p-10 text-center">
+        <h1 class="text-4xl font-bold mb-4 text-white">Welcome to the Book Server</h1>
+        <p class="text-lg text-gray-400 mb-6">
+            Think of these books not just as stories, but as valuable data. With a keen eye for patterns, just like with a trading algorithm, an AI could uncover incredible insights hidden within these texts.
+        </p>
+        <div class="space-y-4">
+            <a href="/book1.txt" class="block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg">
+                View "A Simple Tale" (book1.txt)
+            </a>
+            <a href="/book2.txt" class="block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg">
+                View "The Journey" (book2.txt)
+            </a>
+        </div>
+        <div class="mt-8 text-sm text-gray-500">
+            <p>
+                This project is deployed using Railway.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
