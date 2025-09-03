@@ -73,7 +73,10 @@
 
                     titleH1.textContent = title;
                     titleTag.textContent = title;
-                    contentDiv.textContent = content;
+                    
+                    // Format the content with HTML paragraphs and line breaks
+                    const formattedContent = `<p class="mb-4">${content.replace(/\n\n/g, '</p><p class="mb-4">').replace(/\n/g, '<br>')}</p>`;
+                    contentDiv.innerHTML = formattedContent;
                 })
                 .catch(error => {
                     console.error('Error fetching book content:', error);
