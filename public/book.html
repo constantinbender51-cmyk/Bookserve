@@ -62,14 +62,14 @@
                     let title = lines[0] || 'Untitled';
                     let content = lines.slice(1).join('\n').trim();
 
-                    // Specific logic for the AURA book: remove all hashtags
-                    if (bookName && bookName.toLowerCase() === 'aura') {
+                    // Check if the title contains the word "AURA" and, if so, remove all hashtags
+                    if (title.toLowerCase().includes('aura')) {
                         title = title.replace(/#/g, '');
                         content = content.replace(/#/g, '');
                     }
 
-                    titleH1.textContent = title;
-                    titleTag.textContent = title;
+                    titleH1.textContent = title.trim();
+                    titleTag.textContent = title.trim();
                     
                     // Format the content with HTML paragraphs and line breaks
                     const formattedContent = `<p class="mb-4">${content.replace(/\n\n/g, '</p><p class="mb-4">').replace(/\n/g, '<br>')}</p>`;
