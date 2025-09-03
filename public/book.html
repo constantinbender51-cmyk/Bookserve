@@ -49,18 +49,8 @@
                 return;
             }
 
-            // A map of filenames to full titles
-            const bookTitles = {
-                'book-full_the-genesis-of-aura': 'The Genesis of Aura',
-                'theunheededoracle': 'The Unheeded Oracle: A Dialogue on Wisdom'
-            };
-
             const bookUrl = `/${bookName}.txt`;
-            const formattedTitle = bookTitles[bookName] || bookName.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-
-            titleH1.textContent = formattedTitle;
-            titleTag.textContent = formattedTitle;
-
+            
             // Check if the current book is "The Unheeded Oracle" and show the audio player
             if (bookName === 'theunheededoracle') {
                 audioPlayer.src = '/mp3/wisdom.mp3';
@@ -77,12 +67,18 @@
                     return response.text();
                 })
                 .then(data => {
-                    contentDiv.textContent = data;
+                    const lines = data.split('\n');
+                    const title = lines[0] || 'Untitled';
+                    const content = lines.slice(1).join('\n').trim();
+
+                    titleH1.textContent = title;
+                    titleTag.textContent = title;
+                    contentDiv.textContent = content;
                 })
                 .catch(error => {
                     console.error('Error fetching book content:', error);
                     titleH1.textContent = 'Book Not Found';
-                    contentDiv.textContent = `Sorry, the book "${formattedTitle}" could not be found.`;
+                    contentDiv.textContent = `Sorry, the book could not be found.`;
                 });
         });
     </script>
