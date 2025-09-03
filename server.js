@@ -6,13 +6,16 @@ const app = express();
 // Use process.env.PORT for Railway, or a default port like 3000 for local development
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the 'books' directory
-// The URL path will be based on the file name. For example, 'books/book1.txt' will be accessible at http://localhost:3000/book1.txt
+// Serve the 'public' directory for the main route, which contains index.html
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve the 'books' directory for your book files.
+// The order matters here; Express will first look for a matching file in 'public', then 'books'.
 app.use(express.static(path.join(__dirname, 'books')));
 
 // Start the server and listen for incoming requests
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-  console.log("Serving files from the 'books' directory.");
-  console.log("You can access book1.txt at /book1.txt and book2.txt at /book2.txt");
+  console.log("Serving static files from 'public' and 'books' directories.");
+  console.log("Access the main page at / and books like /book1.txt");
 });
