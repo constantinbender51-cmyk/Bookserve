@@ -59,8 +59,14 @@
                 })
                 .then(data => {
                     const lines = data.split('\n');
-                    const title = lines[0] || 'Untitled';
-                    const content = lines.slice(1).join('\n').trim();
+                    let title = lines[0] || 'Untitled';
+                    let content = lines.slice(1).join('\n').trim();
+
+                    // Specific logic for the AURA book: remove all hashtags
+                    if (bookName && bookName.toLowerCase() === 'aura') {
+                        title = title.replace(/#/g, '');
+                        content = content.replace(/#/g, '');
+                    }
 
                     titleH1.textContent = title;
                     titleTag.textContent = title;
