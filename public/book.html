@@ -20,6 +20,14 @@
             <a href="/" class="text-white text-xl font-bold mr-4 p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">&larr;</a>
             <h1 id="book-title" class="text-3xl font-bold text-white">Loading Book...</h1>
         </div>
+        <!-- Audio player for "The Unheeded Oracle" -->
+        <div id="audio-player-container" class="my-4 hidden">
+            <h2 class="text-lg font-semibold mb-2 text-white">Listen to the book:</h2>
+            <audio id="book-audio" controls class="w-full rounded-xl">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <!-- End of Audio player -->
         <div id="book-content" class="text-base text-gray-300 leading-relaxed max-h-[70vh] overflow-y-auto pr-4">
             <p class="text-center text-gray-500">Loading book content...</p>
         </div>
@@ -31,6 +39,8 @@
             const contentDiv = document.getElementById('book-content');
             const titleH1 = document.getElementById('book-title');
             const titleTag = document.getElementById('book-title-tag');
+            const audioContainer = document.getElementById('audio-player-container');
+            const audioPlayer = document.getElementById('book-audio');
 
             if (!bookName) {
                 titleH1.textContent = 'Error';
@@ -44,6 +54,14 @@
 
             titleH1.textContent = formattedTitle;
             titleTag.textContent = formattedTitle;
+
+            // Check if the current book is "The Unheeded Oracle" and show the audio player
+            if (bookName === 'theunheededoracle') {
+                audioPlayer.src = '/mp3/wisdom.mp3';
+                audioContainer.classList.remove('hidden');
+            } else {
+                audioContainer.classList.add('hidden');
+            }
             
             fetch(bookUrl)
                 .then(response => {
