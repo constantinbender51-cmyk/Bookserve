@@ -20,13 +20,8 @@
         <p class="text-lg text-gray-400 mb-6">
             Think of these books not just as stories, but as valuable data. With a keen eye for patterns, just like with a trading algorithm, an AI could uncover incredible insights hidden within these texts.
         </p>
-        <div class="space-y-4">
-            <a href="/book.html?name=book-full_the-genesis-of-aura" class="block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg">
-                View "The Genesis of Aura"
-            </a>
-            <a href="/book.html?name=theunheededoracle" class="block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg">
-                View "The Unheeded Oracle: A Dialogue on Wisdom"
-            </a>
+        <div id="book-links-container" class="space-y-4">
+            <!-- Book links will be dynamically loaded here by JavaScript -->
         </div>
         <div class="mt-8 text-sm text-gray-500">
             <p>
@@ -34,5 +29,31 @@
             </p>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const books = [
+                'book-full_the-genesis-of-aura',
+                'theunheededoracle'
+            ];
+            const container = document.getElementById('book-links-container');
+
+            for (const bookName of books) {
+                try {
+                    const response = await fetch(`/api/title?name=${bookName}`);
+                    if (!response.ok) {
+                        throw new Error('Title not found.');
+                    }
+                    const title = await response.text();
+                    const link = document.createElement('a');
+                    link.href = `/book.html?name=${bookName}`;
+                    link.className = 'block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg';
+                    link.textContent = title;
+                    container.appendChild(link);
+                } catch (error) {
+                    console.error(`Could not load title for ${bookName}:`, error);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
