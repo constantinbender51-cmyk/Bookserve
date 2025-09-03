@@ -1,21 +1,50 @@
-// Import the Express framework
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const readline = require('readline');
+
 const app = express();
+const port = process.env.PORT || 3000;
 
-// Use process.env.PORT for Railway, or a default port like 3000 for local development
-const PORT = process.env.PORT || 3000;
-
-// Serve the 'public' directory for the main route, which contains index.html
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the 'books' directory for your book files.
-// The order matters here; Express will first look for a matching file in 'public', then 'books'.
+// Serve static files from the 'books' directory
 app.use(express.static(path.join(__dirname, 'books')));
 
-// Start the server and listen for incoming requests
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log("Serving static files from 'public' and 'books' directories.");
-  console.log("Access the main page at / and books like /book1.txt");
+// New API endpoint to get the first line of a book file
+app.get('/api/title', async (req, res) => {
+    const bookName = req.query.name;
+    if (!bookName) {
+        return res.status(400).send('Book name is required.');
+    }
+
+    const filePath = path.join(__dirname, 'books', `${bookName}.txt`);
+
+    // Ensure the file exists and is in the correct directory
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).send('Book not found.');
+    }
+
+    try {
+        const fileStream = fs.createReadStream(filePath);
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+
+        // Read only the first line
+        for await (const line of rl) {
+            rl.close();
+            fileStream.destroy();
+            return res.send(line);
+        }
+    } catch (error) {
+        console.error('Error reading book file:', error);
+        res.status(500).send('Server error.');
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
 });
