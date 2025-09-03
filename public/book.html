@@ -49,8 +49,14 @@
                 return;
             }
 
+            // A map of filenames to full titles
+            const bookTitles = {
+                'book-full_the-genesis-of-aura': 'The Genesis of Aura',
+                'theunheededoracle': 'The Unheeded Oracle: A Dialogue on Wisdom'
+            };
+
             const bookUrl = `/${bookName}.txt`;
-            const formattedTitle = bookName.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            const formattedTitle = bookTitles[bookName] || bookName.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
             titleH1.textContent = formattedTitle;
             titleTag.textContent = formattedTitle;
