@@ -123,8 +123,12 @@
 
             const bookUrl = `/${bookName}.txt`;
             
+            // Check for specific books to add audio
             if (bookName === 'theunheededoracle') {
                 audioPlayer.src = '/mp3/wisdom.mp3';
+                audioContainer.classList.remove('hidden');
+            } else if (bookName === 'book-full_the-genesis-of-aura') {
+                audioPlayer.src = '/mp3/ElevenLabs_2025-09-04T16-28-47_Sarah_eleven_multilingual_v2.mp3';
                 audioContainer.classList.remove('hidden');
             } else {
                 audioContainer.classList.add('hidden');
