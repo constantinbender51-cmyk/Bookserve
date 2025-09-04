@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="book-title-tag">Loading...</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="p-4">
-    <div class="max-w-3xl w-full mx-auto bg-gray-800 border border-gray-700 rounded-2xl shadow-xl p-8 sm:p-10">
-        <div class="flex items-center mb-6">
-            <a href="/" class="text-white text-xl font-bold mr-4 p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">&larr;</a>
-            <h1 id="book-title" class="text-3xl font-bold text-white">Loading Book...</h1>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-link">&larr;</a>
+            <h1 id="book-title" class="book-title">Loading Book...</h1>
         </div>
-        <div id="audio-player-container" class="my-4 hidden">
-            <h2 class="text-lg font-semibold mb-2 text-white">Listen to the book:</h2>
-            <audio id="book-audio" controls class="w-full rounded-xl">
+        <div id="audio-player-container" class="audio-container hidden">
+            <h2 class="audio-heading">Listen to the book:</h2>
+            <audio id="book-audio" controls class="audio-player">
                 Your browser does not support the audio element.
             </audio>
         </div>
-        <div id="book-content" class="text-base text-gray-300 leading-relaxed max-h-[70vh] overflow-y-auto pr-4">
-            <p class="text-center text-gray-500">Loading book content...</p>
+        <div id="book-content" class="book-content">
+            <p class="loading-text">Loading book content...</p>
         </div>
     </div>
     <script>
@@ -66,7 +65,7 @@
                     titleTag.textContent = title;
                     
                     // Format the content with HTML paragraphs and line breaks
-                    const formattedContent = `<p class="mb-4">${content.replace(/\n\n/g, '</p><p class="mb-4">').replace(/\n/g, '<br>')}</p>`;
+                    const formattedContent = `<p class="paragraph">${content.replace(/\n\n/g, '</p><p class="paragraph">').replace(/\n/g, '<br>')}</p>`;
                     contentDiv.innerHTML = formattedContent;
                 })
                 .catch(error => {
