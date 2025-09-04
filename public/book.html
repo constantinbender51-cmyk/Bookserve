@@ -4,7 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="book-title-tag">Loading...</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            font-size: 24px;
+            text-decoration: none;
+            color: #555;
+            margin-right: 15px;
+        }
+        .book-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .audio-container {
+            margin-bottom: 20px;
+        }
+        .audio-heading {
+            font-size: 18px;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .audio-player {
+            width: 100%;
+        }
+        .book-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .paragraph {
+            margin-bottom: 1.2em;
+        }
+        .loading-text {
+            font-style: italic;
+            color: #888;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -41,8 +104,14 @@
 
             const bookUrl = `/${bookName}.txt`;
             
-            // Initial state: hide audio player by default
-            audioContainer.classList.add('hidden');
+            // This is the original, more reliable logic. We check the book name from the URL
+            // and hide or show the audio player before even fetching the book content.
+            if (bookName === 'theunheededoracle') {
+                audioPlayer.src = '/mp3/wisdom.mp3';
+                audioContainer.classList.remove('hidden');
+            } else {
+                audioContainer.classList.add('hidden');
+            }
             
             fetch(bookUrl)
                 .then(response => {
@@ -56,17 +125,8 @@
                     const title = lines[0] || 'Untitled';
                     const content = lines.slice(1).join('\n').trim();
 
-                    // Set the titles
                     titleH1.textContent = title;
                     titleTag.textContent = title;
-
-                    // Check the exact title string to decide whether to show the audio player
-                    if (title.trim() === 'The Unheeded Oracle: A Dialogue on Wisdom') {
-                        audioPlayer.src = '/mp3/wisdom.mp3';
-                        audioContainer.classList.remove('hidden');
-                    } else {
-                        audioContainer.classList.add('hidden');
-                    }
                     
                     // Format the content with HTML paragraphs and line breaks
                     const formattedContent = `<p class="paragraph">${content.replace(/\n\n/g, '</p><p class="paragraph">').replace(/\n/g, '<br>')}</p>`;
