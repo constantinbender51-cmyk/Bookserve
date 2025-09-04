@@ -67,7 +67,26 @@
         .hidden {
             display: none;
         }
+        /* New styles to support Markdown rendering */
+        .book-content h1 {
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+        .book-content h2 {
+            font-size: 1.5em;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        .book-content p {
+            margin-bottom: 1.2em;
+        }
+        .book-content strong, .book-content b {
+            font-weight: bold;
+        }
     </style>
+    <!-- Include a Markdown-to-HTML converter library from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -104,8 +123,6 @@
 
             const bookUrl = `/${bookName}.txt`;
             
-            // This is the original, more reliable logic. We check the book name from the URL
-            // and hide or show the audio player before even fetching the book content.
             if (bookName === 'theunheededoracle') {
                 audioPlayer.src = '/mp3/wisdom.mp3';
                 audioContainer.classList.remove('hidden');
@@ -128,9 +145,9 @@
                     titleH1.textContent = title;
                     titleTag.textContent = title;
                     
-                    // Format the content with HTML paragraphs and line breaks
-                    const formattedContent = `<p class="paragraph">${content.replace(/\n\n/g, '</p><p class="paragraph">').replace(/\n/g, '<br>')}</p>`;
-                    contentDiv.innerHTML = formattedContent;
+                    // Use marked.js to convert the Markdown content to HTML
+                    const formattedHtml = marked.parse(content);
+                    contentDiv.innerHTML = formattedHtml;
                 })
                 .catch(error => {
                     console.error('Error fetching book content:', error);
