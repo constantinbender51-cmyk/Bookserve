@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Powered Book Server</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 bg-gray-900">
-    <div class="max-w-xl w-full mx-auto bg-gray-800 border border-gray-700 rounded-2xl shadow-xl p-8 sm:p-10 text-center">
-        <div id="book-links-container" class="space-y-4">
+<body>
+    <div class="container">
+        <h1 class="heading">Welcome to the Book Server</h1>
+        <p class="subheading">
+            Think of these books not just as stories, but as valuable data. With a keen eye for patterns, just like with a trading algorithm, an AI could uncover incredible insights hidden within these texts.
+        </p>
+        <div id="book-links-container" class="links-container">
         </div>
     </div>
     <script>
@@ -28,7 +32,7 @@
                     const title = await response.text();
                     const link = document.createElement('a');
                     link.href = `/book.html?name=${bookName}`;
-                    link.className = 'block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors duration-200 ease-in-out shadow-lg';
+                    link.className = 'book-link';
                     link.textContent = title;
                     container.appendChild(link);
                 } catch (error) {
