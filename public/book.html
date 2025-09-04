@@ -41,13 +41,8 @@
 
             const bookUrl = `/${bookName}.txt`;
             
-            // Check if the current book is "The Unheeded Oracle" and show the audio player
-            if (bookName === 'theunheededoracle') {
-                audioPlayer.src = '/mp3/wisdom.mp3';
-                audioContainer.classList.remove('hidden');
-            } else {
-                audioContainer.classList.add('hidden');
-            }
+            // Initial state: hide audio player by default
+            audioContainer.classList.add('hidden');
             
             fetch(bookUrl)
                 .then(response => {
@@ -61,8 +56,17 @@
                     const title = lines[0] || 'Untitled';
                     const content = lines.slice(1).join('\n').trim();
 
+                    // Set the titles
                     titleH1.textContent = title;
                     titleTag.textContent = title;
+
+                    // Check the exact title string to decide whether to show the audio player
+                    if (title.trim() === 'The Unheeded Oracle: A Dialogue on Wisdom') {
+                        audioPlayer.src = '/mp3/wisdom.mp3';
+                        audioContainer.classList.remove('hidden');
+                    } else {
+                        audioContainer.classList.add('hidden');
+                    }
                     
                     // Format the content with HTML paragraphs and line breaks
                     const formattedContent = `<p class="paragraph">${content.replace(/\n\n/g, '</p><p class="paragraph">').replace(/\n/g, '<br>')}</p>`;
